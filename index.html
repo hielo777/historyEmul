@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fantasy History Emulator</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #eef2f3;
+      margin: 0;
+      padding: 20px;
+    }
+    canvas {
+      border: 1px solid #444;
+      margin-bottom: 1rem;
+    }
+    #controls, #timelineControls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    #popInfo, #timeline, #globalTimelinePanel {
+      width: 80%;
+      max-width: 800px;
+      margin-top: 10px;
+      padding: 10px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    h3 {
+      margin-top: 0;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Fantasy History Emulator</h1>
+
+  <!-- Canvas -->
+  <canvas id="worldCanvas" width="600" height="600"></canvas>
+
+  <!-- Simulation Controls -->
+  <div id="controls">
+    <button id="startBtn">Start</button>
+    <button id="stopBtn">Stop</button>
+    <button id="stepBtn">Step</button>
+  </div>
+
+  <!-- Timeline Controls -->
+  <div id="timelineControls">
+    <button id="clearTimelineBtn">Clear Timeline</button>
+    <label><input type="checkbox" id="autoScroll" checked /> Auto-scroll</label>
+    <label>Max Events:
+      <input type="number" id="maxEvents" value="100" min="10" max="1000" step="10" />
+    </label>
+  </div>
+
+  <!-- Population Info Panel -->
+  <div id="popInfo">
+    <h3>Population Info</h3>
+    <div id="popDetails">Click on a population on the map to view details.</div>
+  </div>
+
+  <!-- Local Timeline Panel -->
+  <div id="timeline">
+    <h3>Population Timeline</h3>
+    <ul id="eventLog"></ul>
+  </div>
+
+<!-- Global Timeline Filters -->
+<div id="globalTimelineFilters" style="margin-top: 1rem; padding: 10px; border: 1px solid #666; background-color: #f0f0f0; max-width: 800px;">
+  <h3>Filter Global Timeline</h3>
+  <label for="filterType">Event Type:</label>
+  <select id="filterType">
+    <option value="all">All</option>
+    <option value="war">War</option>
+    <option value="technology">Technology</option>
+    <option value="migration">Migration</option>
+    <option value="religion">Religion</option>
+    <option value="general">General</option>
+  </select>
+
+  <label for="startYear" style="margin-left: 10px;">Start Year:</label>
+  <input type="number" id="startYear" placeholder="e.g. 0" style="width: 80px;" />
+
+  <label for="endYear" style="margin-left: 10px;">End Year:</label>
+  <input type="number" id="endYear" placeholder="e.g. 1000" style="width: 80px;" />
+
+  <button onclick="renderGlobalTimeline()" style="margin-left: 10px;">Apply Filter</button>
+</div>
+
+
+  <!-- Global Timeline Panel -->
+  <div id="globalTimelinePanel">
+    <h3>Global Timeline</h3>
+    <ul id="globalTimeline"></ul>
+  </div>
+
+  <!-- JS Script -->
+  <script src="fantasy_history_emulator.js"></script>
+
+</body>
+</html>
