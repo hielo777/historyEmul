@@ -32,6 +32,10 @@
       border: 1px solid #ccc;
       border-radius: 6px;
     }
+    #timeline {
+      height: 300px;
+      overflow:auto;      
+    }
     h3 {
       margin-top: 0;
     }
@@ -68,6 +72,11 @@
   <div id="popInfo">
     <h3>Population Info</h3>
     <div id="popDetails">Click on a population on the map to view details.</div>
+  </div>
+
+  <div id="simulationControls" style="margin: 1em 0;">
+    <button onclick="startSimulation(window.populations, window.world)">Start Simulation</button>
+    <button onclick="stopSimulation()">Stop Simulation</button>
   </div>
 
   <!-- Local Timeline Panel -->

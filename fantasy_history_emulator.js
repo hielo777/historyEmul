@@ -41,7 +41,7 @@ const ArchetypeBehaviors = {
 // === Global Event Logging ===
 const globalEventLog = [];
 
-function logGlobalEvent(description) {
+function logGlobalEvent(description, type = "general") {
   const event = {
     year: worldClock.getCurrentYear(),
     type,
@@ -156,7 +156,6 @@ class World {
       }
     }
 
-    // Draw population units
     for (const pop of populations) {
       ctx.fillStyle = 'red';
       ctx.beginPath();
@@ -383,6 +382,36 @@ function updateAgeDistribution(popUnit) {
     elders: newAges.slice(65).reduce((a, b) => a + b, 0)
   };
 }
+
+// === Auto Simulation Loop ===
+let simulationRunning = false;
+let simulationInterval = null;
+let simulationPopulations = [];
+let simulationWorld = null;
+
+function runSimulationStep() {
+  worldClock.tick(1);
+  simulationPopulations.forEach(pop => updateAgeDistribution(pop));
+  simulationWorld.draw("worldCanvas", simulationPopulations);
+  renderGlobalTimeline();
+}
+
+function startSimulation(populations, world) {
+  simulationPopulations = populations;
+  simulationWorld = world;
+  if (!simulationRunning) {
+    simulationInterval = setInterval(runSimulationStep, 1000);
+    simulationRunning = true;
+  }
+}
+
+function stopSimulation() {
+  clearInterval(simulationInterval);
+  simulationRunning = false;
+}
+
+window.startSimulation = startSimulation;
+window.stopSimulation = stopSimulation;
 
 
 // ===================================================
